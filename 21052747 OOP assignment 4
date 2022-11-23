@@ -1,0 +1,122 @@
+/*WAP in C++ using function template to read 2 matrices of different data types such as integers and floating point values and
+find the sum of the matrices of integers and floating point numbers seperately, and diplay the total sums of these arrays individually.
+*/
+
+
+#include<iostream>
+using namespace std;
+
+template<class T>class matrix{
+    T m[10][10];
+    int row, col;
+   public:
+    matrix(int a, int b){
+        row = a;
+        col = b;
+    }
+    void accept();
+    void display();
+    matrix addition(matrix);
+    matrix sub(matrix);
+    matrix trans();
+    matrix mul(matrix);
+
+};
+
+template<class T>void matrix<T>::accept(){
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            cin>>m[i][j];
+        }
+    }
+}
+
+template <class T>void matrix<T>::display(){
+    for(int i=0; i<row; i++){
+        cout<<"\n";
+        for(int j=0; j<col; j++){
+            cout<<"\t"<<m[i][j];
+        }
+    }
+}
+
+//addition
+template <class T>matrix<T>matrix<T>::addition(matrix<T>B){
+    matrix<T> C(row,col);
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            C.m[i][j] = m[i][j] + B.m[i][j];
+        }
+    }
+    return C;
+}
+
+//subtraction
+template<class T>matrix<T>matrix<T>::sub(matrix<T>B){
+    matrix<T> C(row, col);
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            C.m[i][j] = m[i][j] - B.m[i][j];
+        }
+    }
+    return C;
+}
+
+//transpose
+template<class T>matrix<T>matrix<T>::trans(){
+    matrix<T> C(row,col);
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            C.m[i][j] = m[j][i];
+        }
+    }
+    return C;
+}
+
+//multiplication
+template<class T>matrix<T>matrix<T>::mul(matrix<T> B){
+    matrix<T> C(row,col);
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            C.m[i][j] = m[i][j] + (m[i][j]*B.m[i][j]);
+        }
+    }
+    return C;
+}
+
+int main(){
+    int r,c;
+    cout<<"Enter matrix size(row & column): \n";
+    cin>>r>>c;
+    cout<<"Integer matrix: \n";
+    matrix<int>A(r,c),B(r,c),C(r,c);
+
+    cout<<"Enter matrix1 elements: \n";
+    A.accept();
+    cout<<"Enter matrix2 elements: \n";
+    B.accept();
+
+    cout<<"Elements of matrix1 are: \n";
+    A.display();
+    cout<<"Elements of matrix 2 are: \n";
+    B.display();
+
+    C = A.addition(B);
+    cout<<"\nMatrix addition: \n";
+    C.display();
+
+    C = A.sub(B);
+    cout<<"\nMatrix subtraction: \n";
+    C.display();
+
+    C = A.trans();
+    cout<<"\nTranspose of matrix A is: \n";
+    C.display();
+
+    C = A.mul(B);
+    cout<<"\nMatrix multiplication: \n";
+    C.display();
+
+    return 0;
+}
+
